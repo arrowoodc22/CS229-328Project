@@ -1,5 +1,5 @@
 # CS229-328Project
-Instagram Project
+Etsy Project
 
 Investigate API
 Courtney & Christy							March 16, 2021
