@@ -1,17 +1,22 @@
-import instabot
-bot = Bot()
-bot.login(username="nottheoffice.co", password="Armyscout1317")
 
-my_followers = bot.followers()
+import pip
+from etsy2.oauth import EtsyOAuthClient
 
-print(my_followers)
+pip.main(['install', 'etsy2'])
 
-image = "cat.com"
+from etsy2 import Etsy
 
-bot.upload_photo(image, caption = "yayayay")
-#this lets you upload a photo with a caption and image is a url of a photo
+etsy = Etsy(api_key="r1dyj98d12hgy6po9e7f6es7")
 
-getAllPosts = bot.get_your_medias()
+etsy.findAllFeaturedListings()
 
-for post in getAllPosts:
-    print (bot.get_your_medias(post))
+etsy_oauth = EtsyOAuthClient(client_key="r1dyj98d12hgy6po9e7f6es7",
+                            client_secret="lt4dbjac14",
+                            resource_owner_key=oauth_token,
+                            resource_owner_secret=oauth_token_secret)
+etsy = Etsy(etsy_oauth_client=etsy_oauth)
+
+print (etsy.findAllFeaturedListings())
+print (etsy.findAllRegion)
+
+print (etsy.api_url)
