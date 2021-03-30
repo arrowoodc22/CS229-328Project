@@ -30,15 +30,15 @@ etsy = Etsy(api_key="r1dyj98d12hgy6po9e7f6es7")
 # What is the difference between them?
 
 interesting = etsy.getInterestingListings()
-trending = etsy.getInterestingListings()
+trending = etsy.getTrendingListings()
 
 print(interesting[0])
 print(interesting[0].keys())
 print('\n')
-print(trending)
+print(trending[0])
 
 # # Also explore: findAllListingActive
 active = etsy.findAllListingActive()
 
 print('\n')
-print(active)
+print(active[0])
