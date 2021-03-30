@@ -5,11 +5,11 @@ from etsy2 import Etsy
 
 etsy = Etsy(api_key="r1dyj98d12hgy6po9e7f6es7")
 
-listing = etsy.findAllFeaturedListings()
+# listing = etsy.findAllFeaturedListings()
 
-print(len(listing))
-print(listing[0])
-print(listing[0].keys())
+# print(len(listing))
+# print(listing[0])
+# print(listing[0].keys())
 
 # dict_keys(['listing_id', 'state', 'user_id', 'category_id', 'title', 'description', 
 # 'creation_tsz', 'ending_tsz', 'original_creation_tsz', 'last_modified_tsz', 'price',
@@ -21,10 +21,24 @@ print(listing[0].keys())
 # 'file_data', 'should_auto_renew', 'language', 'has_variations', 'taxonomy_id', 'taxonomy_path',
 # 'used_manufacturer', 'is_vintage'])
 
-print(listing[0]['listing_id'])
-print(listing[0]['category_id'])
-print(listing[0]['title'])
-print(listing[0]['price'])
+# print(listing[0]['listing_id'])
+# print(listing[0]['category_id'])
+# print(listing[0]['title'])
+# print(listing[0]['price'])
 
-# print (etsy.findAllRegion)
-# print (etsy.api_url)
+# Things to explore: findAllFeaturedListings, getInterestingListings, getTrendingListings
+# What is the difference between them?
+
+interesting = etsy.getInterestingListings()
+trending = etsy.getInterestingListings()
+
+print(interesting[0])
+print(interesting[0].keys())
+print('\n')
+print(trending)
+
+# # Also explore: findAllListingActive
+active = etsy.findAllListingActive()
+
+print('\n')
+print(active)
