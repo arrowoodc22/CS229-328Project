@@ -5,11 +5,12 @@ from etsy2 import Etsy
 
 etsy = Etsy(api_key="r1dyj98d12hgy6po9e7f6es7")
 
-# listing = etsy.findAllFeaturedListings()
+listing = etsy.findAllFeaturedListings()
 
-# print(len(listing))
-# print(listing[0])
-# print(listing[0].keys())
+print("THIS IS THE FEATURED INFORMATION: ")
+print(len(listing))
+print(listing[0])
+print(listing[0].keys())
 
 # dict_keys(['listing_id', 'state', 'user_id', 'category_id', 'title', 'description', 
 # 'creation_tsz', 'ending_tsz', 'original_creation_tsz', 'last_modified_tsz', 'price',
@@ -32,13 +33,15 @@ etsy = Etsy(api_key="r1dyj98d12hgy6po9e7f6es7")
 interesting = etsy.getInterestingListings()
 trending = etsy.getTrendingListings()
 
+print("THIS IS THE INTERESTING INFORMATION: ")
 print(interesting[0])
 print(interesting[0].keys())
-print('\n')
+
+print("THIS IS THE TRENDING INFORMATION: ")
 print(trending[0])
 
 # # Also explore: findAllListingActive
 active = etsy.findAllListingActive()
 
-print('\n')
+print("THIS IS THE ACTIVE INFORMATION: ")
 print(active[0])
