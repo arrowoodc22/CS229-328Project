@@ -45,3 +45,10 @@ active = etsy.findAllListingActive()
 
 print("THIS IS THE ACTIVE INFORMATION: ")
 print(active[0])
+
+currentFeaturedL = etsy.findAllCurrentFeaturedListings();
+
+print("THIS IS ALL OF THE CURRENT FEATURED LISTINGS")
+print(currentFeaturedL[0])
+
+

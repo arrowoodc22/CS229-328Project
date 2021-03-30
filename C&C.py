@@ -1,8 +1,8 @@
 
-##import pip
+import pip
 from etsy2.oauth import EtsyOAuthClient
 
-##pip.main(['install', 'etsy2'])
+pip.main(['install', 'etsy2'])
 
 from etsy2 import Etsy
 
