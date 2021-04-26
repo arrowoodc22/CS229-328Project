@@ -1,0 +1,94 @@
+# Courtney Arrowood & Christy Keinsley
+# April 1, 2021 - April 18, 2021
+
+import codecs
+import mysql.connector
+
+
+from etsy2 import Etsy
+from datetime import datetime
+
+class EtsyCommunicator:
+	def __init__(self):
+		self.etsy = Etsy(api_key="r1dyj98d12hgy6po9e7f6es7")
+		self.limit = 80
+
+	cnx = mysql.connector.connect(user='root', password = 'courtney', host='127.0.0.1', database='etsyproject')
+	cnx.close()
+
+
+
+	# This function returns a list of top active trending listings, where
+	# `topNumListings` is the number of listings returned.
+	def getTopTrending(self, topNumListings):
+		activeListings = self.getActiveListings()
+		return activeListings[0 : topNumListings]
+
+	# This function returns a list of active trending listings
+	def getActiveListings(self):
+		listings = self.etsy.getTrendingListings(limit = self.limit)
+		activeAcc = []
+		currDate = datetime.now()
+		date = currDate.strftime('%Y-%m-%d %H:%M:%S')
+		rank = 0
+		for listing in listings:
+			if listing['state'] == 'active':
+				listing = self.filterListingAttributes(listing)
+				rank = rank + 1
+				listing['ranking'] = rank
+				listing['timestamp'] = date
+				activeAcc.append(listing)
+		return activeAcc
+
+	def filterListingAttributes(self, listing):
+		desiredListing = {}
+		desiredAttributes = ['listing_id', 'title', 'price']
+		for attribute in desiredAttributes:
+			desiredListing[attribute] = listing[attribute]
+		return desiredListing
+
+class item:
+	def __init__(self, listings):
+		self.state
+		self.listing_id 
+		self.title 
+		self.price 
+
+class DatabaseCommunicator:
+	def __init__(self):
+		self.database = mysql.connector.connect(user = 'root', password = 'courtney', host = '127.0.0.1', 
+												database = 'etsyproject', buffered = True)
+		self.cursor = self.database.cursor()
+
+	def addListing(self, listing):
+		# If item listing is still in database, only update trending table.
+		query = ("SELECT * FROM item WHERE listing_id = " + str(listing['listing_id']))
+		self.cursor.execute(query)
+		# Item is not in database if rowcount is 0.
+		if self.cursor.rowcount == 0:
+			add_item = ("INSERT INTO item"  "(listing_id, title, price)" "VALUES (%s, %s, %s)")
+			item_data = (listing['listing_id'], "'" + listing['title'] + "'", listing['price'])
+			# Insert item
+			self.cursor.execute(add_item, item_data)
+	
+		add_trending_data = ("INSERT INTO trending_data" "(item_id, timestamp, ranking)" "VALUES (%s, %s, %s)")
+		trending_data = (listing['listing_id'], listing['timestamp'], listing['ranking'])
+		self.cursor.execute(add_trending_data, trending_data)
+		self.database.commit()
+	
+	def endConnection(self):
+		self.database.close()
+		self.cursor.close()
+
+def main():
+	etsyCom = EtsyCommunicator()
+	topTrending = etsyCom.getTopTrending(25)
+	print(*topTrending, sep='\n')
+	print("\n\n")
+	databaseCom = DatabaseCommunicator()
+	for listing in topTrending:
+		print(listing)
+		databaseCom.addListing(listing)
+	databaseCom.endConnection()
+
+main()
